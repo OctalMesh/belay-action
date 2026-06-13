@@ -15,6 +15,9 @@ export default defineConfig({
       js: ".js",
     };
   },
+  deps: {
+    alwaysBundle: ["@actions/core", "@actions/github"],
+  },
   minify: true,
   clean: true,
 });
