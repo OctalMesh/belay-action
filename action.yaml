@@ -1,0 +1,49 @@
+# ============================================================================ #
+#                           Belay Configuration File                           #
+# ============================================================================ #
+# This file defines the configuration for Belay, a custom GitHub Action        #
+# designed for high-performance workflow skipping management. It processes     #
+# commit messages, pull request titles, and labels to issue skip commands.     #
+# ============================================================================ #
+
+# Metadata configuration
+name: "Belay - Skip CI/CD Workflows"
+description: "A lightweight TypeScript action for advanced CI/CD pipeline skip logic"
+author: "OctalMesh"
+
+# GitHub Marketplace Branding
+branding:
+  icon: "anchor"
+  color: "blue"
+
+# Input parameters configuration
+inputs:
+  skip_tags:
+    description: "Comma-separated list of commit tags or PR title patterns that trigger a workflow skip."
+    required: false
+    default: "[ci-skip],[skip-ci]"
+
+  skip_labels:
+    description: "Comma-separated list of GitHub Pull Request labels that trigger a workflow skip."
+    required: false
+    default: "ci-skip,skip-ci"
+
+  cancel_workflow:
+    description: "If true, cancels the entire workflow run when skip is detected instead of just setting the output."
+    required: false
+    default: "false"
+
+  github_token:
+    description: "GitHub token used to cancel the workflow run. Required only when cancel_workflow is true."
+    required: false
+    default: ${{ github.token }}
+
+# Output parameters configuration
+outputs:
+  should_skip:
+    description: "Returns 'true' if any skip criteria are met, otherwise returns 'false'."
+
+# Execution runtime environment
+runs:
+  using: "node24"
+  main: "dist/index.js"
