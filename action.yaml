@@ -8,7 +8,7 @@
 # ============================================================================ #
 
 # Metadata configuration
-name: "Belay"
+name: "Belay Action"
 description: "A lightweight TypeScript action for signal-based CI/CD workflow control"
 author: "OctalMesh"
 
