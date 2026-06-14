@@ -1,0 +1,92 @@
+# ============================================================================ #
+#                           End-to-End Test Workflow                           #
+# ============================================================================ #
+# Runs end-to-end tests by executing the built action in a test workflow on    #
+# every push to dev and on every pull request targeting dev that includes      #
+# changes to the built action files.                                           #
+#                                                                              #
+# Skip tags (anywhere in commit message or PR title):                          #
+#   [ci-skip]   - skips all workflows                                          #
+#   [test-skip] - skips all test workflows                                     #
+#   [e2e-skip]  - skips this workflow only                                     #
+#                                                                              #
+# Note: skip tags are ignored for scheduled runs.                              #
+# ============================================================================ #
+
+name: "Test: End-to-End"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["dev"]
+    paths:
+      - "dist/**"
+      - "action.yaml"
+  pull_request:
+    branches: [ "dev" ]
+    paths:
+      - "dist/**"
+      - "action.yaml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  # Check if the commit message contains skip tags
+  check:
+    name: "Skip Check"
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+
+    steps:
+      - name: "Setup: Checkout repository"
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+
+      - name: "Run: Check skip tags"
+        id: skip_check
+        env:
+          SKIP_TAGS: "[ci-skip] [test-skip] [e2e-skip]"
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          IS_SCHEDULED: ${{ github.event_name == 'schedule' }}
+        # For pull_request events: use PR title + latest commit message
+        # For push events: use the latest commit message from git log
+        # Scheduled runs: always execute regardless of skip tags
+        run: |
+          if [[ "$IS_SCHEDULED" == "true" ]]; then
+            echo "should_skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          COMMIT_MSG=$(git log -1 --format="%s %b")
+          COMBINED="${PR_TITLE} ${COMMIT_MSG}"
+
+          for tag in $SKIP_TAGS; do
+            if [[ "$COMBINED" == *"$tag"* ]]; then
+              echo "should_skip=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+          done
+
+          echo "should_skip=false" >> $GITHUB_OUTPUT
+
+  # Run end-to-end tests
+  e2e:
+    name: "End-to-End Test"
+    needs: check
+    if: needs.check.outputs.should_skip != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: "Setup: Checkout repository"
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: "Run: Test built action in a workflow"
+        uses: ./

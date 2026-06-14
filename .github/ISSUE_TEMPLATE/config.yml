@@ -1,0 +1,10 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name:  "🌐 Website"
+    about: "Check out our official website"
+    url:   "https://octalmesh.com/"
+
+  - name:  "📣 Socials"
+    about: "Join us on social media platforms"
+    url:   "https://links.octalmesh.com/"
