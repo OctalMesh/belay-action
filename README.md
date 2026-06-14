@@ -33,6 +33,13 @@
         <img alt="Contributors" src="https://img.shields.io/github/contributors/OctalMesh/belay-action?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+DQogIDxwYXRoIGZpbGw9IiMzNjM2MzYiIGQ9Ik0yIDUuNWEzLjUgMy41IDAgMSAxIDUuOSAyLjU1IDUuNSA1LjUgMCAwIDEgMy4wMyA0LjA4Ljc1Ljc1IDAgMSAxLTEuNDguMjQgNCA0IDAgMCAwLTcuOSAwIC43NS43NSAwIDAgMS0xLjQ4LS4yNEE1LjUgNS41IDAgMCAxIDMuMSA4LjA1IDMuNSAzLjUgMCAwIDEgMiA1LjVaTTExIDRhMyAzIDAgMCAxIDIuMjIgNS4wMiA1LjAxIDUuMDEgMCAwIDEgMi41NiAzLjAxLjc1Ljc1IDAgMCAxLS44OC45NS43NS43NSAwIDAgMS0uNTUtLjUxIDMuNSAzLjUgMCAwIDAtMi41My0yLjM3Ljc1Ljc1IDAgMCAxLS41Ny0uNzN2LS4zNWEuNzUuNzUgMCAwIDEgLjQyLS42OEExLjUgMS41IDAgMCAwIDExIDUuNS43NS43NSAwIDAgMSAxMSA0Wm0tNS41LS41YTIgMiAwIDEgMCAwIDQgMiAyIDAgMCAwIDAtNFoiLz4NCjwvc3ZnPg==&color=fff&labelColor=eaeaea" />
       </picture>
     </a>
+    <!-- Version Badge -->
+    <a rel="noopener noreferrer" href="https://github.com/OctalMesh/belay-action/releases/latest">
+      <picture>
+        <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/github/v/release/OctalMesh/belay-action?style=for-the-badge&color=363636&labelColor=464646&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTEgNy44di01UTEuMiAxLjIgMi44IDFoNXEuNyAwIDEuMi41bDYuMyA2LjNhMiAyIDAgMCAxIDAgMi40bC01IDVhMiAyIDAgMCAxLTIuNSAwTDEuNSA5QTIgMiAwIDAgMSAxIDcuOG0xLjUgMFY4bDYuMyA2LjJoLjRsNS01di0uNEw4IDIuNmwtLjItLjFoLTVsLS4zLjNaTTYgNWExIDEgMCAxIDEgMCAyIDEgMSAwIDAgMSAwLTIiLz48L3N2Zz4=" />
+        <img alt="License" src="https://img.shields.io/github/v/release/OctalMesh/belay-action?style=for-the-badge&color=fff&labelColor=eaeaea&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZmlsbD0iIzM2MzYzNiIgZD0iTTEgNy44di01UTEuMiAxLjIgMi44IDFoNXEuNyAwIDEuMi41bDYuMyA2LjNhMiAyIDAgMCAxIDAgMi40bC01IDVhMiAyIDAgMCAxLTIuNSAwTDEuNSA5QTIgMiAwIDAgMSAxIDcuOG0xLjUgMFY4bDYuMyA2LjJoLjRsNS01di0uNEw4IDIuNmwtLjItLjFoLTVsLS4zLjNaTTYgNWExIDEgMCAxIDEgMCAyIDEgMSAwIDAgMSAwLTIiLz48L3N2Zz4=" />
+      </picture>
+    </a>
     <br />
     <!-- Repo Views Badge -->
     <a rel="noopener noreferrer" href="https://hits.sh/github.com/OctalMesh/belay-action">

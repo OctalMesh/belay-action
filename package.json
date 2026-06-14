@@ -1,7 +1,7 @@
 {
   "name": "belay-action",
   "description": "A lightweight TypeScript action for signal-based CI/CD workflow control",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "OctalMesh",
   "license": "MIT",
   "type": "module",
