@@ -1,0 +1,79 @@
+{
+  "name": "belay-action",
+  "description": "A lightweight TypeScript action for signal-based CI/CD workflow control",
+  "version": "1.0.0",
+  "author": "OctalMesh",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "keywords": [
+    "octalmesh",
+    "github",
+    "actions",
+    "skip",
+    "belay"
+  ],
+  "homepage": "https://github.com/OctalMesh/belay-action",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OctalMesh/belay-action.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OctalMesh/belay-action/issues"
+  },
+  "packageManager": "pnpm@11.2.2",
+  "engines": {
+    "node": ">=22.22.0",
+    "pnpm": ">=11.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "22.22.3",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.2.2",
+      "onFail": "error"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest",
+    "test:run": "vitest run --passWithNoTests",
+    "test:watch": "vitest watch",
+    "test:ui": "vitest --ui",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "deps": "ncu -i --format group",
+    "deps:check": "ncu --format group",
+    "deps:minor": "ncu -i --target minor",
+    "deps:patch": "ncu -i --target patch",
+    "deps:doctor": "ncu --doctor -u",
+    "deps:peer": "ncu --peer",
+    "tree": "treee -I \"node_modules|.git|.idea|target|build|dist|dev-dist|bin|.project-structure.txt\" -a --dirs-first",
+    "tree:export": "pnpm run tree --silent > .project-structure.txt"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.0",
+    "@actions/github": "^9.1.1"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "@types/node": "^25.9.1",
+    "@vitest/ui": "^4.1.7",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "jiti": "^2.7.0",
+    "npm-check-updates": "^22.2.0",
+    "prettier": "^3.8.3",
+    "tree-node-cli": "^3.0.0",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4",
+    "vitest": "^4.1.7"
+  }
+}
