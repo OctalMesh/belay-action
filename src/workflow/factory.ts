@@ -1,7 +1,6 @@
 import { type WorkflowActionType, WorkflowActions } from "./actions";
-import { CancelHandler } from "./cancel";
 import { type ActionHandler } from "./handler";
-import { ReportHandler } from "./report";
+import { CancelHandler, ReportHandler } from "./handlers";
 
 /**
  * Resolves the appropriate {@link ActionHandler} for the given workflow action.

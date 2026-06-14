@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
-import { type ActionHandler } from "./handler";
+import { type ActionHandler } from "../handler";
 
 /** Milliseconds to wait after requesting cancellation for the API to process. */
 const CANCELLATION_DELAY = 3 * 1000;
@@ -29,12 +29,7 @@ export function buildCancelParams(context: typeof github.context): {
  * Handles workflow cancellation when a belay order is issued.
  */
 export class CancelHandler implements ActionHandler {
-  async execute(token: string, issued: boolean): Promise<void> {
-    if (!issued) {
-      core.info("No belay signals detected - workflow continues.");
-      return;
-    }
-
+  async execute(token: string): Promise<void> {
     const octokit = github.getOctokit(token);
 
     await octokit.rest.actions.cancelWorkflowRun(

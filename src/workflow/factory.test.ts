@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { WorkflowActions } from "@/workflow";
-
-import { CancelHandler } from "./cancel";
+import { WorkflowActions } from "./actions";
 import { resolveHandler } from "./factory";
-import { ReportHandler } from "./report";
+import { CancelHandler, ReportHandler } from "./handlers";
 
 describe("resolveHandler", () => {
   it("returns ReportHandler for 'report'", () => {

@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 
 import { evaluate } from "@/checkers";
-import { resolveConfig } from "@/config";
+import { Outputs, resolveConfig } from "@/config";
 import { resolveHandler } from "@/workflow";
 
 /**
@@ -23,8 +23,12 @@ export async function run(): Promise<void> {
     core.debug(`Belay order issued: ${issued}`);
     core.debug(`On match: ${config.control.onMatch}`);
 
-    const handler = resolveHandler(config.control.onMatch);
-    await handler.execute(config.control.githubToken, issued);
+    core.setOutput(Outputs.ISSUED, String(issued));
+
+    if (issued) {
+      const handler = resolveHandler(config.control.onMatch);
+      await handler.execute(config.control.githubToken);
+    }
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);

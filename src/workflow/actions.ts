@@ -13,16 +13,6 @@ export type WorkflowActionType =
   (typeof WorkflowActions)[keyof typeof WorkflowActions];
 
 /**
- * Workflow control settings parsed from action inputs.
- */
-export interface WorkflowControl {
-  /** Action to execute when a belay order is issued. */
-  onMatch: WorkflowActionType;
-  /** GitHub token used to interact with the GitHub API. */
-  githubToken: string;
-}
-
-/**
  * Parses a raw string input into a {@link WorkflowActionType}.
  *
  * @param value - The raw string value from the action input.
