@@ -1,4 +1,5 @@
-import { type GitContext, type SignalConfig } from "../config";
+import { type GitContext, type SignalConfig } from "@/config";
+
 import { hasSignalLabel } from "./labels";
 import { hasSignalPattern } from "./patterns";
 import { hasSignalTag } from "./tags";

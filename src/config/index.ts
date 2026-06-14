@@ -8,3 +8,4 @@ export type {
   PullRequestPayload,
 } from "./payload";
 export type { SignalConfig } from "./signal";
+export type { WorkflowControl } from "./workflow";

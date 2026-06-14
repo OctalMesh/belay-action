@@ -1,6 +1,7 @@
 import * as core from "@actions/core";
 
-import { type WorkflowControl, parseWorkflowAction } from "@/workflow";
+import { WorkflowControl } from "@/config";
+import { parseWorkflowAction } from "@/workflow";
 
 import { Inputs } from "./constants";
 import { type GitContext, getGitContext } from "./context";
