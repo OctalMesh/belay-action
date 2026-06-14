@@ -1,3 +1,4 @@
+// noinspection JSUnusedGlobalSymbols
 import { defineConfig } from "tsdown";
 
 /**

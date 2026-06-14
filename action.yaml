@@ -2,13 +2,14 @@
 #                           Belay Configuration File                           #
 # ============================================================================ #
 # This file defines the configuration for Belay, a custom GitHub Action        #
-# designed for high-performance workflow skipping management. It processes     #
-# commit messages, pull request titles, and labels to issue skip commands.     #
+# designed for signal-based workflow control. It evaluates commit messages,    #
+# pull request titles, and labels against configured signals and executes      #
+# a specified order in response.                                               #
 # ============================================================================ #
 
 # Metadata configuration
-name: "Belay - Skip CI/CD Workflows"
-description: "A lightweight TypeScript action for advanced CI/CD pipeline skip logic"
+name: "Belay"
+description: "A lightweight TypeScript action for signal-based CI/CD workflow control"
 author: "OctalMesh"
 
 # GitHub Marketplace Branding
@@ -18,30 +19,42 @@ branding:
 
 # Input parameters configuration
 inputs:
-  skip_tags:
-    description: "Comma-separated list of commit tags or PR title patterns that trigger a workflow skip."
+  signal_tags:
+    description: >
+      Comma-separated list of substrings to match against the commit message
+      and pull request title. If any substring is found, a belay order is issued.
     required: false
     default: "[ci-skip],[skip-ci]"
 
-  skip_labels:
-    description: "Comma-separated list of GitHub Pull Request labels that trigger a workflow skip."
+  signal_patterns:
+    description: >
+      Comma-separated list of regex patterns to match against the commit message
+      and pull request title. If any pattern matches, a belay order is issued.
+    required: false
+
+  signal_labels:
+    description: >
+      Comma-separated list of pull request label names. If any label is applied
+      to the pull request, a belay order is issued.
     required: false
     default: "ci-skip,skip-ci"
 
-  cancel_workflow:
-    description: "If true, cancels the entire workflow run when skip is detected instead of just setting the output."
+  on_match:
+    description: >
+      Action to execute when a belay order is issued.
+      Accepted values: report, cancel.
     required: false
-    default: "false"
+    default: "report"
 
   github_token:
-    description: "GitHub token used to cancel the workflow run. Required only when cancel_workflow is true."
+    description: "GitHub token used to interact with the GitHub API."
     required: false
     default: ${{ github.token }}
 
 # Output parameters configuration
 outputs:
-  should_skip:
-    description: "Returns 'true' if any skip criteria are met, otherwise returns 'false'."
+  issued:
+    description: "Returns 'true' if a belay order was issued, 'false' otherwise."
 
 # Execution runtime environment
 runs:

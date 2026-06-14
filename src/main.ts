@@ -1,7 +1,8 @@
 import * as core from "@actions/core";
 
-import { cancelWorkflowRun, shouldSkip } from "./checkers";
-import { getInputs } from "./inputs";
+import { evaluate } from "@/checkers";
+import { resolveConfig } from "@/config";
+import { resolveHandler } from "@/workflow";
 
 /**
  * The main function for the action.
@@ -10,23 +11,20 @@ import { getInputs } from "./inputs";
  */
 export async function run(): Promise<void> {
   try {
-    const inputs = getInputs();
-    const result = shouldSkip(inputs.skip, inputs.context);
+    const config = resolveConfig();
+    const issued = evaluate(config.signals, config.context);
 
-    core.debug(`Skip tags: ${inputs.skip.tags.join(", ")}`);
-    core.debug(`Skip labels: ${inputs.skip.labels.join(", ")}`);
-    core.debug(`Commit message: ${inputs.context.commitMessage}`);
-    core.debug(`PR title: ${inputs.context.prTitle}`);
-    core.debug(`PR labels: ${inputs.context.prLabels.join(", ")}`);
-    core.debug(`Should skip: ${result}`);
-    core.debug(`Cancel workflow: ${inputs.control.cancel}`);
+    core.debug(`Signal tags: ${config.signals.tags.join(", ")}`);
+    core.debug(`Signal patterns: ${config.signals.patterns.join(", ")}`);
+    core.debug(`Signal labels: ${config.signals.labels.join(", ")}`);
+    core.debug(`Commit message: ${config.context.commitMessage}`);
+    core.debug(`PR title: ${config.context.prTitle}`);
+    core.debug(`PR labels: ${config.context.prLabels.join(", ")}`);
+    core.debug(`Belay order issued: ${issued}`);
+    core.debug(`On match: ${config.control.onMatch}`);
 
-    core.setOutput("should_skip", String(result));
-
-    if (result && inputs.control.cancel) {
-      core.info("Skip condition met - cancelling workflow run.");
-      await cancelWorkflowRun(inputs.control.githubToken);
-    }
+    const handler = resolveHandler(config.control.onMatch);
+    await handler.execute(config.control.githubToken, issued);
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);

@@ -1,13 +1,13 @@
 /**
- * Checks whether any of the pull request labels match the skip labels list.
+ * Checks whether any of the pull request labels match the signal labels list.
  *
- * @param prLabels - Labels currently applied to the pull request.
- * @param skipLabels - List of label names that should trigger a skip.
- * @returns `true` if at least one PR label is in the skip list.
+ * @param prLabels     - Labels currently applied to the pull request.
+ * @param signalLabels - List of label names that should trigger a belay order.
+ * @returns `true` if at least one PR label is in the signal list.
  */
-export function hasSkipLabel(
+export function hasSignalLabel(
   prLabels: string[],
-  skipLabels: string[],
+  signalLabels: string[],
 ): boolean {
-  return prLabels.some((label) => skipLabels.includes(label));
+  return prLabels.some((label) => signalLabels.includes(label));
 }
