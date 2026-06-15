@@ -28,47 +28,12 @@ examples/
 > needs.
 
 <div align="center">
-  <h2>Concept Reference</h2>
-</div>
-
-Belay centralizes condition evaluation and workflow execution control. Instead
-of duplicating complex inline bash scripts, regex triggers, and environment
-variable logic across multiple steps, you drop Belay into an isolated guard job
-to process incoming metadata and control downstream execution flow.
-
-```mermaid
-graph TD
-  Event[GitHub Event: Push / PR] --> Job[Job: Signal Evaluation <br/> Belay Action]
-  Job                            --> Evaluation{Signal Match Found?}
-
-  Evaluation -- "Yes" --> LogMatch[issued='true' <br/> Logs match details]
-  Evaluation -- "No"  --> Continue[issued='false' <br/> Logs execution & proceeds]
-
-  LogMatch --> OnMatch{on_match strategy?}
-
-  OnMatch -- "cancel" --> Cancel[Terminates run via GitHub API]
-  OnMatch -- "report" --> Report[Logs result, workflow continues]
-
-  style Event      fill:#f6d9f5,stroke:#b7a1b6,stroke-width:2px,color:#000
-  style Evaluation fill:#fff2cc,stroke:#d6b656,stroke-width:2px,color:#000
-  style LogMatch   fill:#ccefff,stroke:#9cb7c4,stroke-width:2px,color:#000
-  style OnMatch    fill:#fff2cc,stroke:#d6b656,stroke-width:2px,color:#000
-  style Cancel     fill:#f9cedc,stroke:#b79ca5,stroke-width:2px,color:#000
-  style Report     fill:#e2f0cb,stroke:#a8b796,stroke-width:2px,color:#000
-  style Continue   fill:#e2f0cb,stroke:#a8b796,stroke-width:2px,color:#000
-```
-
-> [!NOTE]
-> The issued output is always set to `true` whenever a signal matches,
-> regardless of the `on_match` configuration.
-
-<div align="center">
   <h2>Configuration Examples</h2>
 </div>
 
 Ready-to-copy YAML templates covering both operational modes of the action.
 
-### `report-mode.yaml`
+### [`report-mode.yaml`](./report-mode.yaml)
 
 Demonstrates Report Mode (default) - used for modular workflows where execution
 path gating or job-level conditioning is required based on specific commit,
@@ -80,7 +45,7 @@ pattern, or label states.
 cp examples/report-mode.yaml ./.github/workflows/hev-telemetry.yaml
 ```
 
-### `cancel-mode.yaml`
+### [`cancel-mode.yaml`](./cancel-mode.yaml)
 
 Demonstrates Cancel Mode - an aggressive cost-saving strategy that calls the
 GitHub API to completely mark the workflow run as Canceled the moment a

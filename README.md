@@ -110,6 +110,35 @@ a single reusable action.
 | **Issued**      | The `issued` output - `"true"` if any signal matched, `"false"` otherwise                 |
 
 <div align="center">
+  <h2>How It Works</h2>
+</div>
+
+The following diagram illustrates the lifecycle of a GitHub workflow run when
+evaluated by Belay Action:
+
+```mermaid
+graph TD
+  Event[GitHub Event: Push / PR] --> Job[Job: Signal Evaluation <br/> Belay Action]
+  Job                            --> Evaluation{Signal Match Found?}
+
+  Evaluation -- "Yes" --> LogMatch[issued='true' <br/> Logs match details]
+  Evaluation -- "No"  --> Continue[issued='false' <br/> Logs execution & proceeds]
+
+  LogMatch --> OnMatch{on_match strategy?}
+
+  OnMatch -- "cancel" --> Cancel[Terminates run via GitHub API]
+  OnMatch -- "report" --> Report[Logs result, workflow continues]
+
+  style Event      fill:#f6d9f5,stroke:#b7a1b6,stroke-width:2px,color:#000
+  style Evaluation fill:#fff2cc,stroke:#d6b656,stroke-width:2px,color:#000
+  style LogMatch   fill:#ccefff,stroke:#9cb7c4,stroke-width:2px,color:#000
+  style OnMatch    fill:#fff2cc,stroke:#d6b656,stroke-width:2px,color:#000
+  style Cancel     fill:#f9cedc,stroke:#b79ca5,stroke-width:2px,color:#000
+  style Report     fill:#e2f0cb,stroke:#a8b796,stroke-width:2px,color:#000
+  style Continue   fill:#e2f0cb,stroke:#a8b796,stroke-width:2px,color:#000
+```
+
+<div align="center">
   <h2>Usage</h2>
 </div>
 
