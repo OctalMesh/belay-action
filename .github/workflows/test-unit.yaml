@@ -38,7 +38,7 @@ jobs:
     name: "Skip Check"
     runs-on: ubuntu-latest
     outputs:
-      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+      should_skip: ${{ steps.belay.outputs.issued }}
 
     steps:
       - name: "Setup: Checkout repository"
@@ -48,31 +48,10 @@ jobs:
           fetch-depth: 1
 
       - name: "Run: Check skip tags"
-        id: skip_check
-        env:
-          SKIP_TAGS: "[ci-skip] [test-skip] [unit-skip]"
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          IS_SCHEDULED: ${{ github.event_name == 'schedule' }}
-        # For pull_request events: use PR title + latest commit message
-        # For push events: use the latest commit message from git log
-        # Scheduled runs: always execute regardless of skip tags
-        run: |
-          if [[ "$IS_SCHEDULED" == "true" ]]; then
-            echo "should_skip=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-
-          COMMIT_MSG=$(git log -1 --format="%s %b")
-          COMBINED="${PR_TITLE} ${COMMIT_MSG}"
-
-          for tag in $SKIP_TAGS; do
-            if [[ "$COMBINED" == *"$tag"* ]]; then
-              echo "should_skip=true" >> $GITHUB_OUTPUT
-              exit 0
-            fi
-          done
-
-          echo "should_skip=false" >> $GITHUB_OUTPUT
+        id: belay
+        uses: OctalMesh/belay-action@release
+        with:
+          signal_tags: "[ci-skip],[test-skip],[unit-skip]"
 
   # Run Vitest test suite
   test:
