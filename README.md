@@ -73,6 +73,8 @@
     <a rel="noopener noreferrer" href="SUPPORT.md">Support</a>
     ·
     <a rel="noopener noreferrer" href="LICENSE.md">License</a>
+    ·
+    <a rel="noopener noreferrer" href="examples/README.md">Examples</a>
   </h6>
 </div>
 <div align="justify">

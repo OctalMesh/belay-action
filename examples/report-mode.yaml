@@ -1,0 +1,91 @@
+# DISCLAIMER: This is an example workflow configuration file for Belay Action.
+# It can be unlogically simple or complex cause it's just an example. The actual
+# structure and content of your workflow will depend on your specific
+# project needs and pipeline architecture.
+
+name: "Condition Gating (Report Mode)"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  # 1. Centralized condition evaluator job
+  evaluation-guard:
+    name: "Signal Evaluation"
+    runs-on: ubuntu-latest
+
+    # Map step-level outputs to job-level outputs so downstream jobs can see them.
+    # 'matched' is our custom alias. It reads from the step with id 'belay'.
+    outputs:
+      matched: ${{ steps.belay.outputs.issued }}
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v6
+
+      - name: "Evaluate Pipeline Signals"
+        # This ID is required to reference this step's outputs later
+        id: belay
+        uses: OctalMesh/belay-action@v1
+        with:
+          # An example of using tags as an additional signal source, this one
+          # looks for the tag "[custom-signal]" in commit messages
+          signal_tags: "[custom-signal]"
+          # An example of using labels as an additional signal source, this one
+          # looks for the label "custom-signal-label" on the PR
+          signal_labels: "custom-signal-label"
+          # An example of using regex patterns to match commit messages, this
+          # one matches any commit message starting with "chore(deps)"
+          signal_patterns: "^chore\\(deps\\)"
+          # Do not kill the run; just report the state via outputs
+          on_match: "report"
+
+  # 2. Your actual core workflow job (Gated at JOB level)
+  main-pipeline:
+    name: "Main Execution Path"
+    # Wait for the evaluation guard job to finish execution
+    needs: evaluation-guard
+
+    # CONDITION:
+    # Accesses the parent job's 'matched' output.
+    # This job will ONLY execute if NO signal patterns were detected (matched is
+    # not 'true').
+    if: needs.evaluation-guard.outputs.matched != 'true'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v6
+
+      - name: "Execute Project Tasks"
+        run: |
+          echo "Replace this placeholder with your actual build, test, or deploy scripts."
+
+  # 3. Alternative workflow job (Gated at STEP level across jobs)
+  secondary-pipeline:
+    name: "Partial Execution Path"
+    # Wait for the evaluation guard job to finish execution
+    needs: evaluation-guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v6
+
+      - name: "Always Running Step"
+        run: |
+          echo "This specific step will always run, regardless of Belay's signals."
+
+      # CONDITION:
+      # This step accesses the 'matched' output forwarded by 'evaluation-guard'.
+      # It will be SKIPPED if a signal was detected, even though the job itself
+      # ran.
+      - name: "Cross-Job Conditional Step"
+        if: needs.evaluation-guard.outputs.matched != 'true'
+        run: |
+          echo "This step inside the secondary job runs ONLY if NO signals matched."

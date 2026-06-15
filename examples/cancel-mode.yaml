@@ -1,0 +1,63 @@
+# DISCLAIMER: This is an example workflow configuration file for Belay Action.
+# It can be unlogically simple or complex cause it's just an example. The actual
+# structure and content of your workflow will depend on your specific
+# project needs and pipeline architecture.
+
+name: "Condition Intercept (Cancel Mode)"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  # CRITICAL: Required to authorize run termination via GitHub API. Without this,
+  # Belay Action won't be able to abort the workflow execution on match.
+  actions: write
+
+jobs:
+  # 1. Intercept matching runs before spinning up any heavy execution nodes
+  execution-guard:
+    name: "Cancellation Guard"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v6
+
+      - name: "Evaluate Pipeline Signals"
+        # NOTE: An explicit 'id' is NOT required here because Cancel Mode
+        # terminates the run immediately on match, meaning you don't need to
+        # forward outputs.
+        uses: OctalMesh/belay-action@v1
+        with:
+          # An example of using tags as an additional signal source, this one
+          # looks for the tag "[abort-run]" in commit messages
+          signal_tags: "[abort-run]"
+          # An example of using labels as an additional signal source, this one
+          # looks for the label "cancel-run-label" on the PR
+          signal_labels: "cancel-run-label"
+          # An example of using regex patterns to match commit messages, this
+          # one matches any commit message starting with "chore(deps)"
+          signal_patterns: "^chore\\(deps\\)"
+          # If a match is found, Belay automatically aborts the whole run right
+          # here
+          on_match: "cancel"
+
+  # 2. Your actual core workflow job
+  main-pipeline:
+    name: "Main Execution Path"
+    # Wait for the evaluation guard job to finish execution.
+    # If a signal was matched, this job will NEVER be orchestrated or billed,
+    # because the entire workflow run will already be terminated by the guard.
+    needs: execution-guard
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v6
+
+      - name: "Execute Project Tasks"
+        run: |
+          echo "This step runs securely knowing the guard conditions were not satisfied."
