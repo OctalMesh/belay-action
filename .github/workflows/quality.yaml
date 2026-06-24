@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: "Setup: Checkout repository"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 1
@@ -62,7 +62,7 @@ jobs:
 
     steps:
       - name: "Setup: Checkout repository"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
