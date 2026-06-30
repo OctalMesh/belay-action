@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/OctalMesh/belay-action/issues"
   },
-  "packageManager": "pnpm@11.7.0",
+  "packageManager": "pnpm@11.9.0",
   "engines": {
     "node": ">=22.22.0",
     "pnpm": ">=11.0.0"
@@ -58,17 +58,17 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "@types/node": "^25.9.3",
+    "@types/node": "^26.0.1",
     "@vitest/ui": "^4.1.9",
-    "eslint": "^10.5.0",
+    "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
     "jiti": "^2.7.0",
-    "npm-check-updates": "^22.2.3",
-    "prettier": "^3.8.4",
+    "npm-check-updates": "^22.2.9",
+    "prettier": "^3.9.4",
     "tree-node-cli": "^3.0.0",
-    "tsdown": "^0.22.2",
+    "tsdown": "^0.22.3",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.61.0",
+    "typescript-eslint": "^8.62.1",
     "vitest": "^4.1.9"
   }
 }
