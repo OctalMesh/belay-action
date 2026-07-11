@@ -15,8 +15,6 @@
   </h6>
 </div>
 
-<h1></h1>
-
 > [!CAUTION]
 > **Do not open a public issue, discussion, or pull request to report a security
 > vulnerability.** Use the private channels listed below.

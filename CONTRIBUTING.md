@@ -15,8 +15,6 @@
   </h6>
 </div>
 
-<h1></h1>
-
 Thank you for your interest in **Belay**!
 
 Belay is a small TypeScript GitHub Action used to detect configured signals and

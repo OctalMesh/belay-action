@@ -15,8 +15,6 @@
   </h6>
 </div>
 
-<h1></h1>
-
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our

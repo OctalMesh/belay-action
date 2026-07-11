@@ -15,8 +15,6 @@
   </h6>
 </div>
 
-<h1></h1>
-
 ## What kind of support is available
 
 We provide best-effort, community-driven support for:
