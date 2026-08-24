@@ -60,7 +60,7 @@
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^26.2.0",
-    "@vitest/ui": "^4.1.10",
+    "@vitest/ui": "^4.1.11",
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "jiti": "^2.7.0",
@@ -70,6 +70,6 @@
     "tsdown": "^0.22.14",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   }
 }
