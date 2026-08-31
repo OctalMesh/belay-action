@@ -64,7 +64,7 @@
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "jiti": "^2.7.0",
-    "npm-check-updates": "^23.0.2",
+    "npm-check-updates": "^23.1.0",
     "prettier": "^3.9.6",
     "tree-node-cli": "^3.0.0",
     "tsdown": "^0.22.14",
